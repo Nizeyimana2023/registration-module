@@ -1,0 +1,244 @@
+<%- include('header'); -%>
+
+<section id="main-content">
+    <section class="wrapper">
+      <h3><i class="fa fa-angle-right"></i> View Users</h3>
+      <div class="row mb">
+        <!-- page start-->
+        <div class="content-panel">
+          <div class="adv-table">
+            <h1 class="text-center mt-3 mb-3"><%= title %></h1>
+            
+            <% if(action == 'add') { %>
+
+            <div class="card">
+                <div class="card-header">Sample Form</div>
+                <div class="card-body">
+                    <form method="POST" action="/sample_data/add_sample_data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>First Name</label>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Last Name</label>
+                                    <input type="text" name="last_name" id="last_name" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Age</label>
+                                    <input type="number" name="age" id="age" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Gender</label>
+                                    <select name="gender" class="form-control">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" name="submit_button" class="btn btn-primary" value="Add" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <% } else if(action == 'edit') { %>
+            <div class="card">
+                <div class="card-header">Sample Form</div>
+                <div class="card-body">
+                    <form method="POST" action="/users/sample_data/edit/<%= sampleData.id %>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>First Name</label>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" value="<%= sampleData.first_name %>" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Last Name</label>
+                                    <input type="text" name="last_name" id="last_name" class="form-control" value="<%= sampleData.last_name %>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Age</label>
+                                    <input type="number" name="age" id="age" class="form-control" value="<%= sampleData.age %>" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label>Gender</label>
+                                    <select name="gender" id="gender" class="form-control">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" name="submit_button" class="btn btn-primary" value="Edit" />
+                        </div>
+                    </form>
+                    <script>
+                    document.getElementById('gender').value="<%= sampleData.gender %>";
+                    </script>
+                </div>
+            </div>
+            <% } else { %>
+                <% if(message.length > 0) { %>
+                <div class="alert alert-success">
+                    <%= message %>
+                </div>
+                <% } %>
+
+
+                       
+                        <div class="col">
+                            <center><a href="/users/sample_data/add" class="btn btn-success btn-sm float-end">Add New User</a></center>
+                        </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="adv-table">
+                            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                              
+                            <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                            <%
+                            if(sampleData.length > 0)
+                            {
+                                sampleData.forEach(function(data){
+                            %>
+                            <tr>
+                                <td><%= data.first_name %></td>
+                                <td><%= data.last_name %></td>
+                                <td><%= data.age %></td>
+                                <td><%= data.gender %></td>
+                                <td>
+                                    <a href="/users/edit_users/edit/<%= data.id %>" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href=/users/sample_data/delete/<%= data.id %>" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            <%
+                                });
+                            }
+                            else
+                            {
+                            %>
+                            <tr>
+                                <td colspan="5">No Data Found</td>
+                            </tr>
+                            <%
+                            }
+                            %>
+                        </table>
+                    </div>
+                    </div>
+             
+
+            <% } %>
+
+        </div> 
+
+    </div>
+</div>
+<!-- page end-->
+</div>
+<!-- /row -->
+</section>
+<!-- /wrapper -->
+<%- include('footer'); -%>
+</section>
+<script src="../lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="../lib/advanced-datatable/js/jquery.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="../lib/jquery.dcjqaccordion.2.7.js"></script>
+<script src="../lib/jquery.scrollTo.min.js"></script>
+<script src="../lib/jquery.nicescroll.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="../lib/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../lib/advanced-datatable/js/DT_bootstrap.js"></script>
+<!--common script for all pages-->
+<script src="../lib/common-scripts.js"></script>
+<!--script for this page-->
+<script type="text/javascript">
+/* Formating function for row details */
+function fnFormatDetails(oTable, nTr) {
+var aData = oTable.fnGetData(nTr);
+var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' ' + aData[4] + '</td></tr>';
+sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
+sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+sOut += '</table>';
+
+return sOut;
+}
+
+$(document).ready(function() {
+/*
+* Insert a 'details' column to the table
+*/
+var nCloneTh = document.createElement('th');
+var nCloneTd = document.createElement('td');
+nCloneTd.innerHTML = '<img src="../lib/advanced-datatable/images/details_open.png">';
+nCloneTd.className = "center";
+
+$('#hidden-table-info thead tr').each(function() {
+this.insertBefore(nCloneTh, this.childNodes[0]);
+});
+
+$('#hidden-table-info tbody tr').each(function() {
+this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
+});
+
+/*
+* Initialse DataTables, with no sorting on the 'details' column
+*/
+var oTable = $('#hidden-table-info').dataTable({
+"aoColumnDefs": [{
+  "bSortable": false,
+  "aTargets": [0]
+}],
+"aaSorting": [
+  [1, 'asc']
+]
+});
+
+/* Add event listener for opening and closing details
+* Note that the indicator for showing which row is open is not controlled by DataTables,
+* rather it is done here
+*/
+$('#hidden-table-info tbody td img').live('click', function() {
+var nTr = $(this).parents('tr')[0];
+if (oTable.fnIsOpen(nTr)) {
+  /* This row is already open - close it */
+  this.src = "../lib/advanced-datatable/media/images/details_open.png";
+  oTable.fnClose(nTr);
+} else {
+  /* Open this row */
+  this.src = "../lib/advanced-datatable/images/details_close.png";
+  oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
+}
+});
+});
+</script>
